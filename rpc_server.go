@@ -34,13 +34,13 @@ type RPCServer struct {
 	lock sync.Mutex
 }
 
-// ServerProtocol impl.
+// Init: impl.
 func (s *RPCServer) Init() error { return nil }
 
-// ServerProtocol impl.
+// Config: impl.
 func (s *RPCServer) Config() string { return "" }
 
-// ServerProtocol impl.
+// Serve: Serve impl.
 func (s *RPCServer) Serve(lis net.Listener) {
 	for {
 		conn, err := lis.Accept()

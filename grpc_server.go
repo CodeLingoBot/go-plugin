@@ -58,7 +58,7 @@ type GRPCServer struct {
 	logger hclog.Logger
 }
 
-// ServerProtocol impl.
+// Init: impl.
 func (s *GRPCServer) Init() error {
 	// Create our server
 	var opts []grpc.ServerOption

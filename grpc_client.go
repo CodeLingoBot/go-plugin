@@ -78,14 +78,14 @@ type GRPCClient struct {
 	controller plugin.GRPCControllerClient
 }
 
-// ClientProtocol impl.
+// Close: impl.
 func (c *GRPCClient) Close() error {
 	c.broker.Close()
 	c.controller.Shutdown(c.doneCtx, &plugin.Empty{})
 	return c.Conn.Close()
 }
 
-// ClientProtocol impl.
+// Dispense: impl.
 func (c *GRPCClient) Dispense(name string) (interface{}, error) {
 	raw, ok := c.Plugins[name]
 	if !ok {
@@ -100,7 +100,7 @@ func (c *GRPCClient) Dispense(name string) (interface{}, error) {
 	return p.GRPCClient(c.doneCtx, c.broker, c.Conn)
 }
 
-// ClientProtocol impl.
+// Ping: impl.
 func (c *GRPCClient) Ping() error {
 	client := grpc_health_v1.NewHealthClient(c.Conn)
 	_, err := client.Check(context.Background(), &grpc_health_v1.HealthCheckRequest{

@@ -256,7 +256,7 @@ func (s *SecureConfig) Check(filePath string) (bool, error) {
 	return subtle.ConstantTimeCompare(sum, s.Checksum) == 1, nil
 }
 
-// This makes sure all the managed subprocesses are killed and properly
+// CleanupClients: This makes sure all the managed subprocesses are killed and properly
 // logged. This should be called before the parent process running the
 // plugins exits.
 //
@@ -282,7 +282,7 @@ func CleanupClients() {
 	wg.Wait()
 }
 
-// Creates a new plugin client which manages the lifecycle of an external
+// NewClient: Creates a new plugin client which manages the lifecycle of an external
 // plugin and gets the address for the RPC connection.
 //
 // The client must be cleaned up at some point by calling Kill(). If
@@ -370,7 +370,7 @@ func (c *Client) Client() (ClientProtocol, error) {
 	return c.client, nil
 }
 
-// Tells whether or not the underlying process has exited.
+// Exited: Tells whether or not the underlying process has exited.
 func (c *Client) Exited() bool {
 	c.l.Lock()
 	defer c.l.Unlock()
@@ -385,7 +385,7 @@ func (c *Client) killed() bool {
 	return c.processKilled
 }
 
-// End the executing subprocess (if it is running) and perform any cleanup
+// Kill: End the executing subprocess (if it is running) and perform any cleanup
 // tasks necessary such as capturing any remaining logs and so on.
 //
 // This method blocks until the process successfully exits.
@@ -460,7 +460,7 @@ func (c *Client) Kill() {
 	c.l.Unlock()
 }
 
-// Starts the underlying subprocess, communicating with it to negotiate
+// Start starts the underlying subprocess, communicating with it to negotiate
 // a port for RPC connections, and returning the address to connect via RPC.
 //
 // This method is safe to call multiple times. Subsequent calls have no effect.
